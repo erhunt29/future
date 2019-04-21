@@ -1,9 +1,10 @@
 import React from 'react';
+import SelectData from './components/SelectData/SelectData'
 
 const App = () => {
     return (
         <div>
-            App
+            <SelectData/>
         </div>
 )
     ;

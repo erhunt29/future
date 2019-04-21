@@ -1,8 +1,8 @@
 import React from 'react';
 
-const Row = ({item}) => {
+const Row = ({item, openInformationBlock}) => {
     return (
-        <tr>
+        <tr onClick={() => {openInformationBlock(item)}}>
             <td>{item.id}</td>
             <td>{item.firstName}</td>
             <td>{item.lastName}</td>

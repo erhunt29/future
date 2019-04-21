@@ -1,4 +1,4 @@
-import {LOAD_DATA, SORT_DATA, SELECT_CHUNK} from '../constants'
+import {LOAD_DATA, SORT_DATA, SELECT_CHUNK, OPEN_INFORMATION_BLOCK} from '../constants'
 
 export const loadData = (url) => (
     {
@@ -18,5 +18,13 @@ export const sortData = (field) => (
     {
         type: SORT_DATA,
         payload: {field}
+    }
+);
+
+export const openInformationBlock = (item) => (
+    {
+        type: OPEN_INFORMATION_BLOCK,
+        payload: {item}
+
     }
 );

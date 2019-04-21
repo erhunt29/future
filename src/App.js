@@ -4,15 +4,17 @@ import SelectData from './components/SelectData/SelectData';
 import Preloader from './components/Preloader/Preloader';
 import Table from './components/Table/Table';
 import Pagination from './components/Pagination/Pagination';
-import {selectChunk, sortData} from './AC';
+import InformationBlock from './components/InformationBlock/InformationBlock';
+import {selectChunk, sortData, openInformationBlock} from './AC';
 
-const App = ({data, chunk, selectChunk, sortData}) => {
+const App = ({data, chunk, informationBlock,selectChunk, sortData, openInformationBlock}) => {
     return (
         <div>
-            <SelectData/>
-            {data.isLoading && (<Preloader/>)}
-            {data.array && (<Table data={data.chunks[chunk]} sortData={sortData} sort={data.sort}/>)}
-            {data.array&& data.array.length > 50 && (<Pagination data = {data.chunks} selectChunk={selectChunk}/>)}
+            {!data.isLoading && !data.array &&<SelectData/>}
+            {data.isLoading && <Preloader/>}
+            {data.array && <Table data={data.chunks[chunk]} sortData={sortData} sort={data.sort} openInformationBlock = {openInformationBlock}/>}
+            {data.array&& data.array.length > 50 && <Pagination data = {data.chunks} selectChunk={selectChunk}/>}
+            {informationBlock && <InformationBlock props ={informationBlock.information}/>}
         </div>
 )
     ;
@@ -21,7 +23,8 @@ const App = ({data, chunk, selectChunk, sortData}) => {
 const mapStateToProps = (store) => (
     {
         data: store.data,
-        chunk: store.chunk
+        chunk: store.chunk,
+        informationBlock: store.informationBlock
     });
 
-export default connect(mapStateToProps,{selectChunk, sortData})(App);
+export default connect(mapStateToProps, {selectChunk, sortData, openInformationBlock})(App);

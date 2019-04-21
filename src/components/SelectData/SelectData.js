@@ -8,7 +8,6 @@ class SelectData extends Component {
 
     getData = url =>  () => {
         const {loadData} = this.props;
-
         loadData(url);
     };
 

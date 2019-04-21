@@ -1,27 +1,27 @@
 import React from 'react';
 
-const Top = () => {
+const Top = ({sortData, sort}) => {
     return (
         <tr>
-            <td>
+            <td onClick={()=> sortData('id')}>
                 id
-                <span> ▲</span>
+                <span>{!sort? '▲' : sort.field !== 'id'? '▲' : sort.direction === 'down'? '▼' : '▲'}</span>
             </td>
-            <td>
+            <td onClick={()=> sortData('firstName')}>
                 firstName
-                <span> ▲</span>
+                <span>{!sort? '▲' : sort.field !== 'firstName'? '▲' : sort.direction === 'down'? '▼' : '▲'}</span>
             </td>
-            <td>
+            <td onClick={()=> sortData('lastName')}>
                 lastName
-                <span> ▲</span>
+                <span>{!sort? '▲' : sort.field !== 'lastName'? '▲' : sort.direction === 'down'? '▼' : '▲'}</span>
             </td>
-            <td>
+            <td onClick={()=> sortData('email')}>
                 email
-                <span> ▲</span>
+                <span>{!sort? '▲' : sort.field !== 'email'? '▲' : sort.direction === 'down'? '▼' : '▲'}</span>
             </td>
-            <td>
+            <td onClick={()=> sortData('phone')}>
                 phone
-                <span> ▲</span>
+                <span>{!sort? '▲' : sort.field !== 'phone'? '▲' : sort.direction === 'down'? '▼' : '▲'}</span>
             </td>
         </tr>
     );

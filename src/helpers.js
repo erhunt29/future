@@ -38,3 +38,15 @@ export const sortArrayByField = (arr, field, sort) => {
 
     return {sortableArray, direction}
 };
+
+export const searchInArray = (arr, string) => {
+    return (
+        arr.filter(item => {
+            let result = false;
+            for(let key in item) {
+                if( item[key].toString().indexOf(string) !== -1) result = true;
+            }
+            return result
+        })
+    )
+};

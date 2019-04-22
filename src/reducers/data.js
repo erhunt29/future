@@ -1,5 +1,5 @@
-import {LOAD_DATA, START, SUCCESS, FAIL, SORT_DATA} from '../constants';
-import {splitArr, sortArrayByField} from "../helpers";
+import {LOAD_DATA, START, SUCCESS, FAIL, SORT_DATA, SEARCH_DATA} from '../constants';
+import {splitArr, sortArrayByField, searchInArray} from "../helpers";
 
 const initialStore = {
     isLoading: false,
@@ -8,6 +8,7 @@ const initialStore = {
 
 export default (defaultStore = initialStore, action) => {
     const {type, payload, response, error} = action;
+    const {array, sort} = defaultStore;
 
     switch (type) {
 
@@ -22,7 +23,7 @@ export default (defaultStore = initialStore, action) => {
             return {...defaultStore, isLoading: 'error'};
 
         case SORT_DATA:
-            const {array, sort} = defaultStore;
+
             const {sortableArray, direction} = sortArrayByField(array, payload.field, sort);
 
             return {
@@ -33,7 +34,18 @@ export default (defaultStore = initialStore, action) => {
                     field:  payload.field,
                     direction
                 }
-            }
+            };
+
+        case SEARCH_DATA:
+            const filteredArray = searchInArray(array,payload.string);
+            return  {
+                ...defaultStore,
+                chunks: splitArr(filteredArray, 50),
+                sort: {
+                    field:  payload.field,
+                    direction
+                }
+            };
     }
 
     return defaultStore

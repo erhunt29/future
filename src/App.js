@@ -14,7 +14,8 @@ const App = ({data, chunk, informationBlock,selectChunk, sortData, openInformati
             {!data.isLoading && !data.array &&<SelectData/>}
             {data.isLoading && <Preloader/>}
             {data.array && <Search findString={findString}/>}
-            {data.array && <Table data={data.chunks[chunk]} sortData={sortData} sort={data.sort} openInformationBlock = {openInformationBlock}/>}
+
+            {data.array && data.chunks.length!==0 && <Table data={data.chunks[chunk]} sortData={sortData} sort={data.sort} openInformationBlock = {openInformationBlock}/>}
             {data.array&& data.array.length > 50 && <Pagination data = {data.chunks} selectChunk={selectChunk}/>}
             {informationBlock && <InformationBlock props ={informationBlock.information}/>}
         </div>

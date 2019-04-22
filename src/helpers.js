@@ -44,7 +44,7 @@ export const searchInArray = (arr, string) => {
         arr.filter(item => {
             let result = false;
             for(let key in item) {
-                if( item[key].toString().indexOf(string) !== -1) result = true;
+                if( item[key].toString().toLocaleLowerCase().indexOf(string) !== -1) result = true;
             }
             return result
         })

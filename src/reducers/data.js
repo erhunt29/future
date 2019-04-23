@@ -1,4 +1,4 @@
-import {LOAD_DATA, START, SUCCESS, FAIL, SORT_DATA, SEARCH_DATA} from '../constants';
+import {LOAD_DATA, START, SUCCESS, FAIL, SORT_DATA, SEARCH_DATA, ADD_DATA} from '../constants';
 import {splitArr, sortArrayByField, searchInArray} from "../helpers";
 
 const initialStore = {
@@ -46,6 +46,13 @@ export default (defaultStore = initialStore, action) => {
                     direction
                 }
             };
+        case ADD_DATA:
+            array.push(payload.formData);
+            return {
+                ...defaultStore,
+                array,
+                chunks: splitArr(array, 50),
+            }
     }
 
     return defaultStore

@@ -1,4 +1,4 @@
-import {LOAD_DATA, SORT_DATA, SELECT_CHUNK, OPEN_INFORMATION_BLOCK, SEARCH_DATA} from '../constants'
+import {LOAD_DATA, SORT_DATA, SELECT_CHUNK, OPEN_INFORMATION_BLOCK, SEARCH_DATA, ADD_DATA} from '../constants'
 
 export const loadData = (url) => (
     {
@@ -33,5 +33,12 @@ export const findString = (string) => (
     {
         type: SEARCH_DATA,
         payload: {string}
+    }
+);
+
+export const addString = (formData) => (
+    {
+        type: ADD_DATA,
+        payload: {formData}
     }
 );

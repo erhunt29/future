@@ -1,11 +1,10 @@
 import React from 'react';
-import img from './images/preloader.gif'
+import img from './images/preloader.gif';
+import {Image} from './styled';
 
 const Preloader = () => {
     return (
-        <div>
-            <img src={img} alt="preloader"/>
-        </div>
+        <Image src={img} alt="preloader"/>
     );
 };
 

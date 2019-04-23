@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import {Container, GlobalStyle, Button} from './styled'
 import { connect } from 'react-redux';
 import SelectData from './components/SelectData/SelectData';
 import Preloader from './components/Preloader/Preloader';
@@ -7,7 +8,7 @@ import Table from './components/Table/Table';
 import Pagination from './components/Pagination/Pagination';
 import InformationBlock from './components/InformationBlock/InformationBlock';
 import AddStringForm from './components/AddStringForm/AddStringForm';
-import {selectChunk, sortData, openInformationBlock, findString, addString} from './AC';
+import {loadData, selectChunk, sortData, openInformationBlock, findString, addString} from './AC';
 
 class App extends Component {
 
@@ -21,27 +22,46 @@ class App extends Component {
     };
 
     render() {
-        const {data, chunk, informationBlock} = this.props; //свойства
-        const {selectChunk, sortData, openInformationBlock, findString, addString} = this.props; // action creators
+        const {data, chunk, informationBlock} = this.props; // store
+        const {loadData, selectChunk, sortData, openInformationBlock, findString, addString} = this.props; // action creators
         const {addStringFormIsOpen} = this.state;
         return (
-            <div>
-                {!data.isLoading && !data.array &&<SelectData/>}
-                {data.isLoading && <Preloader/>}
-                {data.array && (
-                    <div style={{display: 'flex'}}>
-                        <Search findString={findString}/>
-                        <button onClick={this.handleOpenAddStringForm}>Добавить</button>
-                    </div>
-                )}
-                {addStringFormIsOpen && <AddStringForm addString={addString}/>}
-                {data.array && data.chunks.length!==0 && <Table data={data.chunks[chunk]} sortData={sortData} sort={data.sort} openInformationBlock = {openInformationBlock}/>}
-                {data.array&& data.array.length > 50 && <Pagination data = {data.chunks} selectChunk={selectChunk}/>}
-                {informationBlock && <InformationBlock props ={informationBlock.information}/>}
-            </div>
+            <React.Fragment>
+                <GlobalStyle/>
+                <Container>
+                    {!data.isLoading && !data.array && <SelectData loadData={loadData}/>}
+
+                    {data.isLoading && <Preloader/>}
+
+                    {data.array  && (
+                        <div style={{display: 'flex', marginBottom: '10px'}}>
+                            <Search findString={findString}/>
+                            {!addStringFormIsOpen && (
+                                <Button onClick={this.handleOpenAddStringForm}>Добавить</Button>
+                            )}
+                        </div>
+                    )}
+                    {data.array && data.chunks.length === 0 && <div>Совпадений не найдено </div>}
+
+                    {addStringFormIsOpen && <AddStringForm addString={addString}/>}
+
+                    {data.array && data.chunks.length!==0 && (
+                        <Table
+                            data={data.chunks[chunk]}
+                            sortData={sortData}
+                            sort={data.sort}
+                            openInformationBlock = {openInformationBlock}
+                        />
+                    )}
+                    {data.array&& data.array.length > 50 && (
+                        <Pagination data = {data.chunks} selectChunk={selectChunk} chunk={chunk}/>
+                    )}
+                    {informationBlock && <InformationBlock props ={informationBlock.information}/>}
+                </Container>
+            </React.Fragment>
         )
     }
-};
+}
 
 const mapStateToProps = (store) => (
     {
@@ -50,4 +70,13 @@ const mapStateToProps = (store) => (
         informationBlock: store.informationBlock
     });
 
-export default connect(mapStateToProps, {selectChunk, sortData, openInformationBlock, findString, addString})(App);
+const actionCreators = {
+    loadData,
+    selectChunk,
+    sortData,
+    openInformationBlock,
+    findString,
+    addString
+};
+
+export default connect(mapStateToProps, actionCreators)(App);

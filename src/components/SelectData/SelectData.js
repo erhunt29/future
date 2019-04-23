@@ -1,33 +1,24 @@
-import React, {Component} from 'react';
-import {connect} from 'react-redux';
-import {loadData} from '../../AC'
+import React from 'react';
 import {urlSmall, urlBig} from '../../constants'
+import {Wrapper, Heading, Button} from './styled'
 
 
-class SelectData extends Component {
+const SelectData = ({loadData}) =>  (
+    <Wrapper>
+        <Heading>Выберете объем данных</Heading>
+        <Button
+            onClick={() => loadData(urlSmall)}
+            first
+        >
+            Маленький
+        </Button>
+        <Button
+            onClick={() => loadData(urlBig)}
+        >
+            Большой
+        </Button>
+    </Wrapper>
+);
 
-    getData = url =>  () => {
-        const {loadData} = this.props;
-        loadData(url);
-    };
 
-    render() {
-        const {data} = this.props;
-
-        return (
-            <div>
-                {!data.array &&(
-                    <div>
-                        <h3>Выберете объем данных</h3>
-                        <button onClick={this.getData(urlSmall)}>Маленький</button>
-                        <button onClick={this.getData(urlBig)}>Большой</button>
-                    </div>
-                )}
-            </div>
-        );
-    }
-}
-
-const mapStateToProps = store => ({data: store.data});
-
-export default connect(mapStateToProps, {loadData})(SelectData);
+export default SelectData;

@@ -1,19 +1,29 @@
 import React, {Component} from 'react';
+import {Input, Button} from './styled';
 
 class Search extends Component {
     state = {
         string: ''
     };
+
     handleChange =(ev)=> {
        this.setState({string: ev.target.value})
     };
-    render() {
+
+    handleSubmit = (ev)=> {
+        ev.preventDefault();
         const {findString} = this.props;
         const {string} = this.state;
+        findString(string);
+    };
+
+    render() {
+
+        const {string} = this.state;
         return (
-            <form>
-                <input type="text" onChange={this.handleChange} value={string}/>
-                <button onClick={(ev)=> {ev.preventDefault();findString(string)}}>Найти</button>
+            <form onSubmit={this.handleSubmit}>
+                <Input type="text" onChange={this.handleChange} value={string}/>
+                <Button>Найти</Button>
             </form>
         );
     }

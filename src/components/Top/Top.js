@@ -1,28 +1,28 @@
 import React from 'react';
+import {Indicator} from './styled';
 
 const Top = ({sortData, sort}) => {
+
+    const checkActive = (field) => !!sort && sort.field  === field;
+    const checkDirection = (field) => !sort? '▲' : sort.field !== field ? '▲' : sort.direction === 'down'? '▼' : '▲';
+    const fields = [
+        'id',
+        'firstName',
+        'lastName',
+        'email',
+        'phone'
+    ];
+
     return (
         <tr>
-            <td onClick={()=> sortData('id')}>
-                id
-                <span>{!sort? '▲' : sort.field !== 'id'? '▲' : sort.direction === 'down'? '▼' : '▲'}</span>
-            </td>
-            <td onClick={()=> sortData('firstName')}>
-                firstName
-                <span>{!sort? '▲' : sort.field !== 'firstName'? '▲' : sort.direction === 'down'? '▼' : '▲'}</span>
-            </td>
-            <td onClick={()=> sortData('lastName')}>
-                lastName
-                <span>{!sort? '▲' : sort.field !== 'lastName'? '▲' : sort.direction === 'down'? '▼' : '▲'}</span>
-            </td>
-            <td onClick={()=> sortData('email')}>
-                email
-                <span>{!sort? '▲' : sort.field !== 'email'? '▲' : sort.direction === 'down'? '▼' : '▲'}</span>
-            </td>
-            <td onClick={()=> sortData('phone')}>
-                phone
-                <span>{!sort? '▲' : sort.field !== 'phone'? '▲' : sort.direction === 'down'? '▼' : '▲'}</span>
-            </td>
+            {fields.map( field => (
+                <td onClick={()=> sortData(field)} key={field}>
+                    {field}
+                    <Indicator active={checkActive(field)}>
+                        {checkDirection(field)}
+                    </Indicator>
+                </td>
+            ))}
         </tr>
     );
 };
